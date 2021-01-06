@@ -14,8 +14,10 @@
         var interval = setInterval(idleFunction, 1000);
 
         function idleFunction() {
-            score = score + powerAbsorber;
+            if(powerAbsorber>=1) {
+                score = score + powerAbsorber;
             document.getElementById("text1").innerHTML = "Power: " + score;
+            }
         }
 
         function powerAbsorberFunction() {
