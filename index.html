@@ -1,33 +1,51 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Practice</title>
+        <title>BasicIdle</title>
     </head>
     <body>
         <h1>Welcome</h1>
-        <p>Hope you are ready to play my game</p>
+        <p>Version 0.1.1</p>
+        <h2>Buy the goal for 100,000 points. Good Luck</h2>
         <script>
         var score = 0;
         var scoreMultiplier = 1;
+        var powerAbsorber = 0;
+        var interval = setInterval(idleFunction, 1000);
 
+        function idleFunction() {
+            score = score + powerAbsorber;
+            document.getElementById("text1").innerHTML = "Power: " + score;
+        }
+
+        function powerAbsorberFunction() {
+            if(score>=100) {
+                powerAbsorber++;
+                score = score - 100;
+                document.getElementById("text1").innerHTML = "Power: " + score;
+                document.getElementById("text3").innerHTML = "You own " + powerAbsorber + " power absorbers";
+            }
+        }
         function upgradeFunction() {
             if(score>=10) {
                 scoreMultiplier++;
                 score = score - 10;
-                document.getElementById("demo2").innerHTML = "You have " + (scoreMultiplier-1) + " upgrades";
-                document.getElementById("demo").innerHTML = "Power: " + score;
+                document.getElementById("text2").innerHTML = "You have " + (scoreMultiplier-1) + " upgrades";
+                document.getElementById("text1").innerHTML = "Power: " + score;
             } else {
                 upgrade = false;
             }
         }
         function basicClicking() {
             score = score + scoreMultiplier
-            document.getElementById("demo").innerHTML = "Power: " + score;
+            document.getElementById("text1").innerHTML = "Power: " + score;
         }
         </script>
         <button type="button" onclick="basicClicking()">Click to increase your power</button>
-        <p id="demo">click the button to gain power</p>
-        <button type="button" onClick="upgradeFunction()">Click to buy an upgrade for 10 score</button>
-        <p id="demo2">upgrade is not bought</p>
+        <p id="text1">Click the button to gain power</p>
+        <button type="button" onClick="upgradeFunction()">Click to buy an upgrade for 10 power</button>
+        <p id="text2">Upgrades are not bought</p>
+        <button type="button" onclick="powerAbsorberFunction()">Click to buy a power absorber for 100 power</button>
+        <p id="text3">Buy a power absorber to automatically gain power from... well I can't tell you that is a secret</p>
     </body>
 </html>
