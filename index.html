@@ -9,7 +9,31 @@
 
     div.b {
         position: absolute;
-        top: 600px;
+        top: 700px;
+    }
+
+    div.c {
+        position: absolute;
+        left: 10px;
+        top: -10px;
+    }
+
+    .buttonClick {
+        background-color:green;
+        color: white;
+        font-size:large;
+        text-align:center;
+        width: 300px;
+        height: 300px;
+    }
+
+    .buttonUpgrades {
+        color:black;
+        background-color:lightgray;
+        font-size:medium;
+        text-align:center;
+        width: 100 px;
+        height: 50 px;
     }
     </style>
     <head>
@@ -17,8 +41,8 @@
     </head>
     <body>
         <h1>Welcome</h1>
-        <p>Version 0.2.0</p>
-        <h2>Buy the goal for 100,000 points. Good Luck</h2>
+        <p>Version 0.3.0</p>
+        <h2>Gain as much power as possible, by any means</h2>
         <script>
         var score = 0;
         var scoreMultiplier = 1;
@@ -29,38 +53,99 @@
         var mousePowerMultiplier = 1;
         var pamf = 0;
         var smf = 0;
+        var prestige = 1;
+        var prestigeMultiplier = 1;
+        var prestigeCost = 100000;
+        var i;
+        var powerAbsorberCost = 15;
+        var mouseCost = 200;
+        var ruf = 0;
+        var divCap = 6;
 
+        function beastBurgerFunction() {
+            if(score>=1000000000 && ruf == 1) {
+                score = score - 1000000000;
+                document.getElementById("text1").innerHTML = "Power: " + Math.round(score);
+                powerAbsorberMultiplier = 6;
+                hideDivCap();
+            }
+        }
 
-        function theGoal() {
-            if(score>=100000) {
-                score = score - 100000;
-                document.getElementById("text1").innerHTML = "Power: " + score;
-                alert('Click Here for your Reward: https://www.youtube.com/watch?v=dQw4w9WgXcQ')
+        function rtxUpgradeFunction() {
+            if(score>=1000000) {
+                score = score - 1000000;
+                document.getElementById("text1").innerHTML = "Power: " + Math.round(score);
+                interval = setInterval(idleFunction, 500);
+                hideDivCap();
+                ruf = 1;
             }
         }
 
         function hideDiv() {
             var x = document.getElementById("hiddenDiv" + currentDiv);
             if (x.style.display === "none") {
-            x.style.display = "block";
+                x.style.display = "block";
             } else {
-            x.style.display = "none";
+                x.style.display = "none";
             }
             currentDiv++;
+        }
+
+        function hideDivCap() {
+            var x = document.getElementById("hiddenDiv" + divCap);
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+            divCap++;
         }
         
         function steveBail() {
             if(score>=50000 && smf == 1) {
                 score = score - 50000;
-                document.getElementById("text1").innerHTML = "Power: " + score;
+                document.getElementById("text1").innerHTML = "Power: " + Math.round(score);
                 hideDiv();
+                var x = document.getElementById("steveText1");
+                if (x.style.display === "none") {
+                    x.style.display = "block";
+                } else {
+                    x.style.display = "none";
+                }
+                var y = document.getElementById("hiddenDiv" + currentDiv);
+                if (y.style.display === "none") {
+                    y.style.display = "block";
+                } else {
+                    y.style.display = "none";
+                }
+                var d = document.getElementById("hiddenDiv5");
+                if (d.style.display === "none") {
+                    d.style.display = "block";
+                } else {
+                    d.style.display = "none";
+                }
+
+                var t = document.getElementById("hiddenDiv6");
+                if (t.style.display === "none") {
+                    t.style.display = "block";
+                } else {
+                    t.style.display = "none";
+                }
+                currentDiv = 6;
+
+                var b = document.getElementById("hiddenDiv7");
+                if (b.style.display === "none") {
+                    b.style.display = "block";
+                } else {
+                    b.style.display = "none";
+                }
             }
         }
 
         function steelMiceFunction() {
             if(score>=10000 && pamf == 1) {
                 score = score - 10000;
-                document.getElementById("text1").innerHTML = "Power: " + score;
+                document.getElementById("text1").innerHTML = "Power: " + Math.round(score);
                 mousePowerMultiplier = mousePowerMultiplier + 1;
                 hideDiv();
                 smf++;
@@ -70,7 +155,7 @@
         function powerAbsorberMultiplierFunction() {
             if(score>=1000) {
                 score = score - 1000;
-                document.getElementById("text1").innerHTML = "Power: " + score;
+                document.getElementById("text1").innerHTML = "Power: " + Math.round(score);
                 powerAbsorberMultiplier = powerAbsorberMultiplier + 1;
                 hideDiv();
                 pamf++;
@@ -79,65 +164,222 @@
 
         function idleFunction() {
             if(powerAbsorber>=1) {
-                score = score + powerAbsorber * powerAbsorberMultiplier;
-                document.getElementById("text1").innerHTML = "Power: " + score;
+                score = score + powerAbsorber * powerAbsorberMultiplier * prestigeMultiplier;
+                document.getElementById("text1").innerHTML = "Power: " + Math.round(score);
             }
         }
 
-        function powerAbsorberFunction() {
-            if(score>=100) {
-                powerAbsorber++;
-                score = score - 100;
-                document.getElementById("text1").innerHTML = "Power: " + score;
-                document.getElementById("text3").innerHTML = "You own " + powerAbsorber + " power absorbers";
-            }
-        }
-        function miceFunction() {
-            if(score>=10) {
-                scoreMultiplier++;
-                score = score - 10;
-                document.getElementById("text2").innerHTML = "You have " + (scoreMultiplier-1) + " upgrades";
-                document.getElementById("text1").innerHTML = "Power: " + score;
-            } else {
-                upgrade = false;
-            }
-        }
         function basicClicking() {
-            score = score + scoreMultiplier * mousePowerMultiplier;
-            document.getElementById("text1").innerHTML = "Power: " + score;
+            score = score + scoreMultiplier * mousePowerMultiplier * prestigeMultiplier;
+            document.getElementById("text1").innerHTML = "Power: " + Math.round(score);
         }
         </script>
-        <button type="button" onclick="basicClicking()">Click to increase your power</button>
+        <button type="button" class ="buttonClick" onclick="basicClicking()">Click to increase your power</button>
         <p id="text1">Click the button to gain power</p>
-        <button type="button" onClick="miceFunction()">Click to buy a new mouse for 10 power</button>
+        <button type="button" class ="buttonUpgrades" onclick="powerAbsorberFunction()" id="powerAbsorberText">Click to buy a power absorber for 15 power</button>
+        <p id="text3">Buy a power absorber to automatically gain power from nearby energy wells</p>
+        <button type="button" class ="buttonUpgrades" onclick="miceFunction()" id="mouseText">Click to buy a new mouse for 200 power</button>
         <p id="text2">A new and better mouse will make your clicks more powerful, as logic clearly dictates</p>
-        <button type="button" onclick="powerAbsorberFunction()">Click to buy a power absorber for 100 power</button>
-        <p id="text3">Buy a power absorber to automatically gain power from... well I can't tell you that is a secret</p>
+        <script>
+            function powerAbsorberFunction() {
+                if(score>=powerAbsorberCost) {
+                    powerAbsorber++;
+                    score = score - powerAbsorberCost;
+                    document.getElementById("text1").innerHTML = "Power: " + Math.round(score);
+                    document.getElementById("text3").innerHTML = "You own " + powerAbsorber + " power absorbers";
+                    powerAbsorberCost=powerAbsorberCost*1.1;
+                    document.getElementById("powerAbsorberText").innerHTML = "Click to buy a power absorber for " + Math.round(powerAbsorberCost) + " power";
+                    }
+                }
+            function miceFunction() {
+                if(score>=mouseCost) {
+                    scoreMultiplier++;
+                    score = score - mouseCost;
+                    document.getElementById("text2").innerHTML = "You have " + (scoreMultiplier-1) + " mice";
+                    document.getElementById("text1").innerHTML = "Power: " + Math.round(score);
+                    mouseCost=mouseCost*1.5;
+                    document.getElementById("mouseText").innerHTML = "Click to buy a new mouse for " + Math.round(mouseCost) + " power";
+                }
+            }
+        </script>
         <div class="a">
             <pre>
-#########
-#  o  o #
-#       #
-# \---/ #
-#########
+###########             
+#         #
+#  @   @  #
+#         #
+# \  &  / #
+#  \___/  #
+###########
             </pre>
-            <h3>This is Steve the Salesman, he is here to sell you upgrades</h3>
+            <h3 id="steveText1">This is Steve the Salesman, he is here to sell you upgrades</h3>
             <div id=hiddenDiv1>
-                <button type="button" onclick="powerAbsorberMultiplierFunction()">Diuranium monoxide - 1,000 power</button>
+                <button type="button" class ="buttonUpgrades" onclick="powerAbsorberMultiplierFunction()">Diuranium monoxide - 1,000 power</button>
                 <p>A new fuel for your power absorbers that will double their efficiency</p>
             </div>
             <div id=hiddenDiv2>
-                <button type="button" onclick="steelMiceFunction()">Steel mice - 10,000 power</button>
+                <button type="button" class ="buttonUpgrades" onclick="steelMiceFunction()">Steel mice - 10,000 power</button>
                 <p>Coat all of your mice in steel doubling their power, I swear these are computer mice and not a violation of animal rights</p>
             </div>
             <div id=hiddenDiv3>
-                <button type="button" onclick="steveBail()">Steve's bail money - 50,000 power</button>
-                <p>Listen Steve has gotten himself into some real bad shit, he needs some help getting out</p>
+                <button type="button" class ="buttonUpgrades" onclick="steveBail()">Steve's bail money - 50,000 power</button>
+                <p>Listen Steve has gotten himself into some real bad stuff, he needs your help to get out</p>
             </div>
+            <div id=hiddenDiv4 class="c">
+                <pre>
+                       _/\_
+                     _/    \_
+                    /________\
+                    |        |
+                    | o    o |
+                    |   []   |
+                    |___[]___|
+                </pre>
+            </div>
+            <div id=hiddenDiv5>
+                <h3>Steve bought a bigger shop! He now has even more upgrades for you</h3>
+            </div>
+            <div id=hiddenDiv6>
+                <button type="button" class ="buttonUpgrades" onclick="rtxUpgradeFunction()">GeForce RTX 3080 Graphics Card - 1,000,000 power</button>
+                <p>Install one of these bad boys into your power absorbers to double the speed they make you power, and lets you use minecraft shaders</p>
+            </div>
+            <div id=hiddenDiv7>
+                <button type="button" class ="buttonUpgrades" onclick="beastBurgerFunction()">GFuel and Mr Beast Burgers - 1,000,000,000 power</button>
+                <p>Inserting these into your power absorber's fuel slot does wonders for their power, 3x power absorber strength</p>
+            </div>
+            <script>
+                var y = document.getElementById("hiddenDiv4");
+                if (y.style.display === "none") {
+                    y.style.display = "block";
+                } else {
+                    y.style.display = "none";
+                }
+
+                var d = document.getElementById("hiddenDiv5");
+                if (d.style.display === "none") {
+                    d.style.display = "block";
+                } else {
+                    d.style.display = "none";
+                }
+
+                var t = document.getElementById("hiddenDiv6");
+                if (t.style.display === "none") {
+                    t.style.display = "block";
+                } else {
+                    t.style.display = "none";
+                }
+
+                var b = document.getElementById("hiddenDiv7");
+                if (b.style.display === "none") {
+                    b.style.display = "block";
+                } else {
+                    b.style.display = "none";
+                }
+            </script>
         </div>
         <div class="b">
-            <h2>THE GOAL:</h2>
-            <button type="button" onclick="theGoal()">BUY ME FOR 100,000 POWER</button>
+            <h2>Prestige:</h2>
+            <button type="button" class ="buttonUpgrades" onclick="prestigeFunction()" id="prestigeText1">Prestige</button>
+            <script>
+                document.getElementById("prestigeText1").innerHTML = prestigeCost + " Power to Prestige";
+            function prestigeFunction() {
+            if(score>=prestigeCost) {
+                score = score - prestigeCost;
+                prestige++;
+                prestigeMultiplier++;
+                score = 0;
+                scoreMultiplier = 1;
+                powerAbsorber = 0;
+                powerAbsorberMultiplier = 1;
+                divCap = 6;
+                powerAbsorberCost = 15;
+                mouseCost = 200;
+                interval = setInterval(idleFunction,1000);
+                var x = document.getElementById("steveText1");
+                        if (x.style.display === "none") {
+                            x.style.display = "block";
+                        } else {
+                            x.style.display = "block";
+                        }
+                if(currentDiv == 8) {
+                    for (i=1; i < 8; i++) {
+                        var x = document.getElementById("hiddenDiv" + i);
+                        if (x.style.display === "none") {
+                            x.style.display = "block";
+                        } else {
+                            x.style.display = "none";
+                        }
+                    }
+                } else if(currentDiv == 7) {
+                    for (i=1; i < 7; i++) {
+                        var x = document.getElementById("hiddenDiv" + i);
+                        if (x.style.display === "none") {
+                            x.style.display = "block";
+                        } else {
+                            x.style.display = "none";
+                        }
+                    }
+                } else if(currentDiv == 6) {
+                    for (i=1; i < 6; i++) {
+                        var x = document.getElementById("hiddenDiv" + i);
+                        if (x.style.display === "none") {
+                            x.style.display = "block";
+                        } else {
+                            x.style.display = "none";
+                        }
+                    }
+                } else if(currentDiv == 5) {
+                    for (i=1; i < 5; i++) {
+                        var x = document.getElementById("hiddenDiv" + i);
+                        if (x.style.display === "none") {
+                            x.style.display = "block";
+                        } else {
+                            x.style.display = "none";
+                        }
+                    }
+                } else if(currentDiv == 4) {
+                    for (i=1; i < 4; i++) {
+                        var x = document.getElementById("hiddenDiv" + i);
+                        if (x.style.display === "none") {
+                            x.style.display = "block";
+                        } else {
+                            x.style.display = "none";
+                        }
+                    }
+                } else if(currentDiv == 3) {
+                    for (i=1; i < 3; i++) {
+                        var x = document.getElementById("hiddenDiv" + i);
+                        if (x.style.display === "none") {
+                            x.style.display = "block";
+                        } else {
+                            x.style.display = "none";
+                        }
+                    }
+                } else if(currentDiv == 2) {
+                    for (i=1; i < 2; i++) {
+                        var x = document.getElementById("hiddenDiv" + i);
+                        if (x.style.display === "none") {
+                            x.style.display = "block";
+                        } else {
+                            x.style.display = "none";
+                        }
+                    }
+                }
+                currentDiv = 1;
+                mousePowerMultiplier = 1;
+                pamf = 0;
+                smf = 0;
+                document.getElementById("text1").innerHTML = "Power: " + score;
+                prestigeCost=100000*(prestige*prestige);
+                document.getElementById("prestigeText1").innerHTML = prestigeCost + " Power to Prestige";
+                document.getElementById("powerAbsorberText").innerHTML = "Click to buy a power absorber for " + Math.round(powerAbsorberCost) + " power";
+                document.getElementById("mouseText").innerHTML = "Click to buy a new mouse for " + Math.round(mouseCost) + " power";
+                document.getElementById("text3").innerHTML = "You own " + powerAbsorber + " power absorbers";
+                document.getElementById("text2").innerHTML = "You have " + (scoreMultiplier-1) + " mice";
+            }
+        }
+            </script>
+            <p>Shed your power and ascend to get even more power!</p>
         </div>
     </body>
 </html>
