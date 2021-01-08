@@ -41,7 +41,7 @@
     </head>
     <body>
         <h1>Welcome</h1>
-        <p>Version 0.3.1</p>
+        <p>Version 0.3.2</p>
         <h2>Gain as much power as possible, by any means</h2>
         <script>
         var score = 0;
@@ -93,15 +93,17 @@
         }
 
         function hideDivCap() {
-            var x = document.getElementById("hiddenDiv" + divCap);
-            if (x.style.display === "none") {
-                x.style.display = "block";
-            } else {
-                x.style.display = "none";
+            for(i = 0; i < 2; i++) {
+                var x = document.getElementById("hiddenDiv" + divCap);
+                if (x.style.display === "none") {
+                    x.style.display = "block";
+                } else {
+                    x.style.display = "none";
+                }
+                divCap++;
             }
-            divCap++;
         }
-        
+
         function steveBail() {
             if(score>=50000 && smf == 1) {
                 score = score - 50000;
@@ -175,6 +177,7 @@
             score = score + scoreMultiplier * mousePowerMultiplier * prestigeMultiplier;
             document.getElementById("text1").innerHTML = "Power: " + Math.round(score);
         }
+
         </script>
         <button type="button" class ="buttonClick" onclick="basicClicking()">Click to increase your power</button>
         <p id="text1">Click the button to gain power</p>
@@ -378,6 +381,7 @@
                 document.getElementById("mouseText").innerHTML = "Click to buy a new mouse for " + Math.round(mouseCost) + " power";
                 document.getElementById("text3").innerHTML = "You own " + powerAbsorber + " power absorbers";
                 document.getElementById("text2").innerHTML = "You have " + (scoreMultiplier-1) + " mice";
+                hideDivCap();
             }
         }
             </script>
