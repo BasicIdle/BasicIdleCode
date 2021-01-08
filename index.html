@@ -41,7 +41,7 @@
     </head>
     <body>
         <h1>Welcome</h1>
-        <p>Version 0.3.0</p>
+        <p>Version 0.3.1</p>
         <h2>Gain as much power as possible, by any means</h2>
         <script>
         var score = 0;
@@ -61,6 +61,7 @@
         var mouseCost = 200;
         var ruf = 0;
         var divCap = 6;
+        var sbm = 0;
 
         function beastBurgerFunction() {
             if(score>=1000000000 && ruf == 1) {
@@ -106,6 +107,7 @@
                 score = score - 50000;
                 document.getElementById("text1").innerHTML = "Power: " + Math.round(score);
                 hideDiv();
+                sbm = 1;
                 var x = document.getElementById("steveText1");
                 if (x.style.display === "none") {
                     x.style.display = "block";
@@ -283,7 +285,7 @@
             <script>
                 document.getElementById("prestigeText1").innerHTML = prestigeCost + " Power to Prestige";
             function prestigeFunction() {
-            if(score>=prestigeCost) {
+            if(score>=prestigeCost && sbm == 1) {
                 score = score - prestigeCost;
                 prestige++;
                 prestigeMultiplier++;
@@ -379,7 +381,7 @@
             }
         }
             </script>
-            <p>Shed your power and ascend to get even more power!</p>
+            <p>Shed your power and ascend to get even more power! (Requires the "Steve's bail money" upgrade)</p>
         </div>
     </body>
 </html>
